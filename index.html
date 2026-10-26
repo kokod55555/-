@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071827" />
+    <meta name="description" content="BioStove Insight — prototype dashboard for biomass stove monitoring." />
+    <title>BioStove Insight | Prototype Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="BioStove Insight home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M17.1 3.8c.8 5.4-3.7 6.9-3.7 10.8 0 1.7 1 3.1 2.5 3.8-.2-2.6 1.2-4.1 3-5.3 2.3 2.1 4.2 4.8 4.2 8.2 0 4.4-3.6 7.6-8.4 7.6-5.1 0-9-3.5-9-8.6 0-4.8 3-8.2 7.2-12.6.2 3.2 1 4.9 2 5.9.2-3.8 1.5-6.8 2.2-9.8Z" fill="currentColor"/><path d="M15.4 24.7c1.8 0 3.1-1.1 3.1-2.7 0-1.1-.6-2.1-1.7-3.2-1.3 1-2 2.1-2 3.6 0 .9.2 1.6.6 2.3Z" fill="#071827"/></svg>
+          </span>
+          <span><strong>BioStove</strong> <em>Insight</em></span>
+        </a>
+        <div class="topbar-actions">
+          <span class="prototype-badge"><span class="dot dot-amber"></span> PROTOTYPE • SIMULATED DATA</span>
+          <span class="connection-status"><span class="dot dot-green"></span> System online</span>
+          <button class="icon-button" id="refreshButton" type="button" aria-label="Refresh simulated data" title="Refresh simulated data">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-14.9-4L3 10m0-4v4h4M4 13a8.1 8.1 0 0 0 14.9 4L21 14m0 4v-4h-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero-section">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> COMMUNITY ENERGY INTELLIGENCE</p>
+            <h1>เห็นภาพการใช้เตา<br /><span>จากทุกพื้นที่ในหน้าเดียว</span></h1>
+            <p class="hero-copy">ระบบต้นแบบสำหรับติดตามการใช้งานเตาชีวมวล ประเมินพลังงาน และวางรากฐานสู่การจัดการคาร์บอนระดับชุมชน</p>
+          </div>
+          <div class="hero-note">
+            <span class="note-icon">✦</span>
+            <div><strong>Concept prototype</strong><br /><span>ข้อมูลจำลองเพื่อสาธิตแนวคิดระบบ</span></div>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Overview statistics">
+          <article class="stat-card stat-blue">
+            <div class="stat-head"><span class="stat-label">เต่าทั้งหมด</span><span class="stat-icon">⌖</span></div>
+            <div class="stat-value" id="totalStoves">60</div>
+            <div class="stat-foot"><span class="up-mark">↗</span> ครอบคลุม 4 ชุมชน</div>
+          </article>
+          <article class="stat-card stat-green">
+            <div class="stat-head"><span class="stat-label">กำลังใช้งาน</span><span class="stat-icon">◉</span></div>
+            <div class="stat-value" id="activeStoves">18</div>
+            <div class="stat-foot"><span class="live-pulse"></span> กำลังติดตามแบบจำลอง</div>
+          </article>
+          <article class="stat-card stat-cyan">
+            <div class="stat-head"><span class="stat-label">การใช้งานวันนี้</span><span class="stat-icon">◷</span></div>
+            <div class="stat-value" id="usageToday">87 <small>ครั้ง</small></div>
+            <div class="stat-foot"><span class="up-mark">↗ 12.4%</span> เทียบกับค่าเฉลี่ย</div>
+          </article>
+          <article class="stat-card stat-amber">
+            <div class="stat-head"><span class="stat-label">เชื้อเพลิงโดยประมาณ</span><span class="stat-icon">◒</span></div>
+            <div class="stat-value" id="fuelUsed">126.8 <small>kg</small></div>
+            <div class="stat-foot"><span class="muted">พลังงานรวม 1,900 MJ</span></div>
+          </article>
+        </section>
+
+        <section class="workspace-grid">
+          <article class="panel map-panel">
+            <div class="panel-heading">
+              <div><p class="section-kicker">LIVE NETWORK MAP</p><h2>เครือข่ายเตาชีวมวล</h2></div>
+              <div class="map-actions">
+                <button class="filter-button active" data-filter="all" type="button">ทั้งหมด <span id="allCount">60</span></button>
+                <button class="filter-button" data-filter="active" type="button"><span class="dot dot-green"></span> ใช้งาน <span id="activeCount">18</span></button>
+                <button class="filter-button" data-filter="offline" type="button"><span class="dot dot-red"></span> Offline <span id="offlineCount">3</span></button>
+              </div>
+            </div>
+            <div class="map-toolbar">
+              <label class="search-box"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="searchInput" type="search" placeholder="ค้นหารหัสเตา หรือชุมชน..." /></label>
+              <span class="map-updated">อัปเดตล่าสุด <strong id="lastUpdated">เมื่อสักครู่</strong></span>
+            </div>
+            <div class="map-viewport" id="mapViewport">
+              <svg id="mapSvg" viewBox="0 0 1000 560" role="img" aria-label="Map of biomass stove locations">
+                <defs>
+                  <linearGradient id="mapBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#102e3b"/><stop offset="1" stop-color="#0b202e"/></linearGradient>
+                  <pattern id="gridPattern" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#2b5560" stroke-opacity=".2" stroke-width="1"/></pattern>
+                  <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                </defs>
+                <rect width="1000" height="560" fill="url(#mapBg)"/>
+                <rect width="1000" height="560" fill="url(#gridPattern)"/>
+                <path class="map-water" d="M-50 420C100 340 167 462 295 398S500 311 604 371s187 83 446-61v250H-50Z"/>
+                <path class="map-road road-main" d="M-30 164C124 202 174 105 296 154s172 175 299 130 202-112 435-45"/>
+                <path class="map-road" d="M71 500c145-88 181-171 236-278S429 96 609 80s214 48 414 10"/>
+                <path class="map-road" d="M184-20c20 115 115 144 235 160s161 15 256 99 117 166 354 211"/>
+                <path class="map-road road-small" d="M38 309c113-31 179 19 271-7s132-106 246-75 199 92 404 18"/>
+                <path class="map-boundary" d="M118 78l138-34 152 44 122-39 156 45 164-35v351l-158 61-171-48-153 55-167-56-140 38-105-74z"/>
+                <g class="map-labels" aria-hidden="true"><text x="93" y="132">หนองบัว</text><text x="438" y="102">บ้านดอน</text><text x="777" y="175">โคกสว่าง</text><text x="703" y="445">ทุ่งทอง</text><text x="270" y="453">คลองใหม่</text></g>
+                <g id="markerLayer"></g>
+              </svg>
+              <div class="map-scale"><span></span> 2 km</div>
+              <div class="map-legend"><span><i class="legend-dot green"></i>ใช้งาน</span><span><i class="legend-dot blue"></i>พร้อมใช้</span><span><i class="legend-dot red"></i>ออฟไลน์</span></div>
+            </div>
+          </article>
+
+          <aside class="panel detail-panel" aria-live="polite">
+            <div class="detail-top"><div><p class="section-kicker">SELECTED STOVE</p><h2 id="selectedName">BS-023</h2></div><span class="status-pill status-active" id="selectedStatus">● กำลังใช้งาน</span></div>
+            <p class="location-line"><span>⌖</span> <span id="selectedCommunity">บ้านดอน • โซนกลาง</span></p>
+            <div class="temperature-display"><div><span class="temperature-label">อุณหภูมิปล่องควัน</span><div class="temperature-value"><span id="selectedTemp">218</span><sup>°C</sup></div></div><div class="temperature-ring"><div><span>สถานะ</span><strong id="selectedState">ACTIVE</strong></div></div></div>
+            <div class="detail-metrics"><div><span>ใช้งานวันนี้</span><strong id="selectedUsage">3 ครั้ง</strong></div><div><span>ระยะเวลาเฉลี่ย</span><strong id="selectedDuration">47 นาที</strong></div><div><span>อุณหภูมิสูงสุด</span><strong id="selectedMax">283°C</strong></div><div><span>สัญญาณล่าสุด</span><strong id="selectedSignal">ดีมาก</strong></div></div>
+            <div class="detail-footer"><span>Sensor ID: <strong id="selectedSensor">TMP-023-A</strong></span><span class="signal-bars"><i></i><i></i><i></i><i></i></span></div>
+            <button class="outline-button" id="focusActiveButton" type="button">ดูเตาที่กำลังใช้งาน <span>→</span></button>
+          </aside>
+        </section>
+
+        <section class="analytics-grid">
+          <article class="panel chart-panel">
+            <div class="panel-heading compact"><div><p class="section-kicker">TEMPERATURE TELEMETRY</p><h2>อุณหภูมิย้อนหลัง 24 ชั่วโมง</h2></div><span class="chart-tag"><i></i> live simulation</span></div>
+            <div class="chart-wrap"><svg id="temperatureChart" viewBox="0 0 900 290" role="img" aria-label="Temperature chart for selected stove"></svg></div>
+            <div class="chart-footer"><span><i class="chart-line-key"></i> อุณหภูมิปล่องควัน</span><span><i class="threshold-key"></i> เกณฑ์เริ่มนับการใช้งาน 100°C</span></div>
+          </article>
+          <article class="panel carbon-panel">
+            <div class="panel-heading compact"><div><p class="section-kicker">IMPACT PREVIEW</p><h2>ภาพรวมผลกระทบ</h2></div><span class="leaf-icon">♧</span></div>
+            <div class="impact-highlight"><span class="impact-symbol">CO₂</span><div><strong>Model under development</strong><p>ระบบอยู่ระหว่างพัฒนาแบบจำลองการปล่อยคาร์บอน</p></div></div>
+            <div class="impact-list"><div><span>พลังงานชีวมวลวันนี้</span><strong>1,900 <small>MJ</small></strong></div><div><span>เชื้อเพลิงที่ประเมิน</span><strong>126.8 <small>kg</small></strong></div><div><span>ชั่วโมงการใช้งานรวม</span><strong>96.4 <small>ชม.</small></strong></div></div>
+            <div class="impact-note"><span>i</span> ค่า CO₂ จะคำนวณจากชนิดเชื้อเพลิง ปริมาณการใช้ และ emission factor ที่ผ่านการศึกษา</div>
+          </article>
+        </section>
+
+        <section class="panel events-panel">
+          <div class="panel-heading compact"><div><p class="section-kicker">RECENT ACTIVITY</p><h2>ประวัติการใช้งานล่าสุด</h2></div><button class="text-button" id="showAllButton" type="button">ดูทั้งหมด <span>→</span></button></div>
+          <div class="table-scroll"><table><thead><tr><th>เตา</th><th>ชุมชน</th><th>เหตุการณ์</th><th>อุณหภูมิ</th><th>เวลา</th><th>สถานะ</th></tr></thead><tbody id="eventsBody"></tbody></table></div>
+        </section>
+      </main>
+
+      <footer class="footer"><span><strong>BioStove Insight</strong> • IoT-Based Biomass Stove Monitoring</span><span>Prototype Dashboard <b>v0.1</b> • <em>Simulated data for proposal demonstration</em></span></footer>
+    </div>
+    <div class="toast" id="toast" role="status">อัปเดตข้อมูลจำลองแล้ว</div>
+    <script src="app.js"></script>
+  </body>
+</html>
